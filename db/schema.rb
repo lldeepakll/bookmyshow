@@ -10,10 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_154630) do
+ActiveRecord::Schema.define(version: 2022_07_29_164617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cinema_halls", force: :cascade do |t|
+    t.integer "hall_no"
+    t.integer "total_seats"
+    t.bigint "cinema_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cinema_id"], name: "index_cinema_halls_on_cinema_id"
+  end
+
+  create_table "cinema_seats", force: :cascade do |t|
+    t.integer "seat_no"
+    t.string "seat_type"
+    t.bigint "cinema_hall_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cinema_hall_id"], name: "index_cinema_seats_on_cinema_hall_id"
+  end
+
+  create_table "cinemas", force: :cascade do |t|
+    t.string "name"
+    t.integer "no_of_hall"
+    t.bigint "city_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_cinemas_on_city_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.string "state"
+    t.string "zip_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -24,4 +59,7 @@ ActiveRecord::Schema.define(version: 2022_07_29_154630) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "cinema_halls", "cinemas"
+  add_foreign_key "cinema_seats", "cinema_halls"
+  add_foreign_key "cinemas", "cities"
 end

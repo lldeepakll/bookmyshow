@@ -72,3 +72,14 @@ Request JSON :
     }]
 }
 ```
+
+<h4>POST localhost:3000/cities</h4>
+<p> To create or post city in cities table</p>
+
+```
+{
+    "name" : "Mumbai",
+    "state" : "Maharashtra",
+    "zip_code" :"400001"
+}
+```

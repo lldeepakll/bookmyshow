@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_164617) do
+ActiveRecord::Schema.define(version: 2022_07_30_150224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,25 @@ ActiveRecord::Schema.define(version: 2022_07_29_164617) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "movies", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "duration"
+    t.string "language"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "shows", force: :cascade do |t|
+    t.string "date"
+    t.bigint "cinema_hall_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cinema_hall_id"], name: "index_shows_on_cinema_hall_id"
+    t.index ["movie_id"], name: "index_shows_on_movie_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -62,4 +81,6 @@ ActiveRecord::Schema.define(version: 2022_07_29_164617) do
   add_foreign_key "cinema_halls", "cinemas"
   add_foreign_key "cinema_seats", "cinema_halls"
   add_foreign_key "cinemas", "cities"
+  add_foreign_key "shows", "cinema_halls"
+  add_foreign_key "shows", "movies"
 end

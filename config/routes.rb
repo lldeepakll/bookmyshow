@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :shows
+  resources :movies
   resources :cinema_seats
   resources :cinema_halls
   resources :cinemas

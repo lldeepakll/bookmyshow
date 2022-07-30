@@ -5,7 +5,9 @@ class CinemasController < ApplicationController
   def index
     @cinemas = Cinema.all
 
-    render json: @cinemas.to_json(include: :cinema_halls)
+    render json: @cinemas.to_json(include: { cinema_halls: { include: :cinema_seats}})
+
+    # render json: @cinemas.to_json(include: :cinema_halls)
   end
 
   # GET /cinemas/1
